@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type User = {
   name: string;
@@ -7,10 +7,10 @@ type User = {
 
 async function fetchData<T>(url: string): Promise<T> {
   try {
-    const response = await axios.get(url);
+    const response: AxiosResponse<T> = await axios.get<T>(url);
     return response.data;
   } catch (error) {
-    throw new Error(`Error fetching from ${url}: ${error}`);
+    throw new Error(`Error fetching from ${url}: ${(error as Error).message}`);
   }
 }
 
